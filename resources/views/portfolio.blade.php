@@ -18,10 +18,30 @@
             </p>
         </div>
 
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button onclick="filterProjects('all')" 
+                    class="filter-btn active px-6 py-3 bg-[#9D4E12] hover:bg-[#593A27] text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
+                Tous les projets
+            </button>
+            <button onclick="filterProjects('web')" 
+                    class="filter-btn px-6 py-3 bg-[#23180F]/60 hover:bg-[#9D4E12] text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 border border-[#9D4E12]/30">
+                Sites Web
+            </button>
+            <button onclick="filterProjects('ecommerce')" 
+                    class="filter-btn px-6 py-3 bg-[#23180F]/60 hover:bg-[#9D4E12] text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 border border-[#9D4E12]/30">
+                E-commerce
+            </button>
+            <button onclick="filterProjects('app')" 
+                    class="filter-btn px-6 py-3 bg-[#23180F]/60 hover:bg-[#9D4E12] text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 border border-[#9D4E12]/30">
+                Applications
+            </button>
+        </div>
+
         <!-- Projects Grid -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($projects as $project)
-                <div class="bg-[#23180F]/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-[#9D4E12]/50 transition-all duration-300 transform hover:scale-105">
+                <div class="project-card bg-[#23180F]/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg hover:shadow-[#9D4E12]/50 transition-all duration-300 transform hover:scale-105" data-category="{{ $project['category'] }}">
                     
                     <!-- Project Image -->
                     <div class="h-32 bg-gradient-to-br from-[#593A27] to-[#9D4E12] overflow-hidden">
@@ -107,5 +127,38 @@
 
     </div>
 </section>
+
+<script>
+    function filterProjects(category) {
+        const projects = document.querySelectorAll('.project-card');
+        const buttons = document.querySelectorAll('.filter-btn');
+        
+        // Update button styles
+        buttons.forEach(btn => {
+            btn.classList.remove('active', 'bg-[#9D4E12]');
+            btn.classList.add('bg-[#23180F]/60', 'border', 'border-[#9D4E12]/30');
+        });
+        
+        event.target.classList.add('active', 'bg-[#9D4E12]');
+        event.target.classList.remove('bg-[#23180F]/60', 'border', 'border-[#9D4E12]/30');
+        
+        // Filter projects
+        projects.forEach(project => {
+            if (category === 'all' || project.dataset.category === category) {
+                project.style.display = 'block';
+                setTimeout(() => {
+                    project.style.opacity = '1';
+                    project.style.transform = 'scale(1)';
+                }, 10);
+            } else {
+                project.style.opacity = '0';
+                project.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    project.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+</script>
 
 @endsection

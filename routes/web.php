@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 
-// Routes utilisant le contrôleur
-Route::get('/', [SiteController::class, 'home'])->name('home');
+// Routes utilisant le contrôleur - ONE PAGE
+Route::get('/', [SiteController::class, 'onepage'])->name('home');
 
 Route::get('/portfolio', [SiteController::class, 'projects'])->name('portfolio');
 
